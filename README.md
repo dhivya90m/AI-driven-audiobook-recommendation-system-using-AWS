@@ -106,3 +106,37 @@ A utility script that lists all available models in **Amazon Bedrock**. It helps
 ### 8. `details_model.py`
 
 This script fetches detailed information about the **Titan model** used for embedding generation. It allows you to examine model parameters and settings.
+
+## 🧩 Flow Diagram
+
+### 1. Load Data
+- **audiobooks.csv** → `process_csv.py` → Chunk into 512-character segments
+
+### 2. Metadata Extraction
+- Titles, authors fetched via `generate_metadata_from_s3.py`
+
+### 3. Embeddings
+- **Titan** embeddings generated using `generate_embeddings.py` (via Bedrock)
+
+### 4. Store in DynamoDB
+- `update_embeddings.py` + `update_dynamodb_metadata.py` push data
+
+### 5. Lambda API
+- `query_handler.py` deployed as AWS Lambda behind API Gateway
+
+### 6. Query
+- User inputs → **Titan** → Cosine similarity → JSON response
+
+## 🚀 Deployment Highlights
+
+- Used **AWS CloudShell** for entire pipeline development
+- Zipped and deployed Lambda using `query_handler.py`
+- Integrated **ngrok** for local testing
+- Used **IAM policies** to safely enable Bedrock access
+
+## 🧪 Example Query
+
+```json
+{
+  "query": "Books on self-discipline"
+}
