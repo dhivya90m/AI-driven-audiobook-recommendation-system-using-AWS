@@ -95,3 +95,47 @@ audiobook-genai/
 ├── titan_policy.json                 # IAM policy for accessing Amazon Bedrock services securely
 ├── requirements.txt                  # List of required Python packages (e.g., boto3, pandas)
 └── README.md                         # Project documentation
+
+## 🧑‍💻 Detailed Explanation of Key Python Scripts
+
+This section provides an in-depth explanation of the key Python scripts used in this project. Each script serves a specific purpose in processing data, generating embeddings, and handling queries. Below is a breakdown of each script:
+
+### 1. `process_csv.py`
+
+This script processes the raw `audiobooks.csv` file by splitting it into smaller text chunks (512 characters per chunk). This chunking makes it easier to process large volumes of text and ensures memory efficiency when generating embeddings.
+
+### 2. `generate_embeddings.py`
+
+This script interacts with **Amazon Bedrock** to generate embeddings for each text chunk. It sends a batch of text chunks to **Titan** (the embedding model), which then returns a vector representation for each chunk. These vectors are stored in a format suitable for querying later.
+
+### 3. `update_embeddings.py`
+
+Once the embeddings are generated, this script stores them in **DynamoDB**, along with metadata such as book titles and authors. The embeddings are stored as numerical arrays for future retrieval during the query process.
+
+### 4. `generate_metadata_from_s3.py`
+
+This script pulls metadata from **S3**, such as book titles and authors, and formats it for storage in **DynamoDB**. Metadata is essential for providing context to the recommendations.
+
+### 5. `query_handler.py`
+
+This is the core of the **AWS Lambda function**. It receives the user query via **API Gateway**, generates an embedding for the query, and compares it with the stored embeddings in **DynamoDB** using cosine similarity. The Lambda function returns the top 3 most relevant audiobooks to the user.
+
+### 6. `query_bedrock.py`
+
+A local testing script to simulate queries and see how well the Bedrock embedding model responds. This script is used for testing purposes before deploying the Lambda function.
+
+### 7. `list_models.py`
+
+A utility script that lists all available models in **Amazon Bedrock**. It helps you identify and interact with the models you plan to use in your workflow.
+
+### 8. `details_model.py`
+
+This script fetches detailed information about the **Titan model** used for embedding generation. It allows you to examine model parameters and settings.
+
+## 📝 Prerequisites
+
+Before running the scripts, make sure you have the following set up:
+
+- **AWS account** with permissions to use Bedrock, DynamoDB, Lambda, and API Gateway.
+- **AWS CLI** configured with the necessary credentials.
+- **Python 3.7+** and the required libraries installed. You can install the libraries by running:
