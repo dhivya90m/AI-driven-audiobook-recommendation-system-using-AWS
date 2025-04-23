@@ -71,31 +71,6 @@ The system will process these queries and recommend relevant audiobooks from a d
 
 ---
 
-## 🛠️ Project Structure
-
-```bash
-audiobook-genai/
-├── audiobooks.csv                     # Raw audiobook dataset (CSV format)
-├── chunks/                            # Folder for chunked text files (from the CSV)
-├── metadata.json                      # S3-based metadata of the audiobooks
-├── output.txt                         # Sample output logs for reference
-│
-├── process_csv.py                     # Script to chunk the CSV data into smaller segments
-├── generate_embeddings.py            # Script to generate embeddings using Amazon Titan (via Bedrock)
-├── update_embeddings.py              # Script to store embeddings in DynamoDB
-├── generate_metadata_from_s3.py      # Extract metadata from S3 and prepare it for storage
-├── update_dynamodb_metadata.py       # Push extracted metadata to DynamoDB
-├── update_dynamodb_from_json.py      # Optional script to update metadata in DynamoDB in batch
-│
-├── query_handler.py                  # AWS Lambda function to handle incoming queries and return recommendations
-├── query_bedrock.py                  # Local script to test queries with Amazon Bedrock embeddings
-├── list_models.py                    # Helper script to list all available Bedrock models
-├── details_model.py                  # Helper script to fetch details about Titan embedding models
-│
-├── titan_policy.json                 # IAM policy for accessing Amazon Bedrock services securely
-├── requirements.txt                  # List of required Python packages (e.g., boto3, pandas)
-└── README.md                         # Project documentation
-
 ## 🧑‍💻 Detailed Explanation of Key Python Scripts
 
 This section provides an in-depth explanation of the key Python scripts used in this project. Each script serves a specific purpose in processing data, generating embeddings, and handling queries. Below is a breakdown of each script:
@@ -138,4 +113,31 @@ Before running the scripts, make sure you have the following set up:
 
 - **AWS account** with permissions to use Bedrock, DynamoDB, Lambda, and API Gateway.
 - **AWS CLI** configured with the necessary credentials.
-- **Python 3.7+** and the required libraries installed. You can install the libraries by running:
+- **Python 3.7+** and the required libraries installed.
+
+``` bash
+## 🛠️ Project Structure
+
+audiobook-genai/
+├── audiobooks.csv                     # Raw audiobook dataset (CSV format)
+├── chunks/                            # Folder for chunked text files (from the CSV)
+├── metadata.json                      # S3-based metadata of the audiobooks
+├── output.txt                         # Sample output logs for reference
+│
+├── process_csv.py                     # Script to chunk the CSV data into smaller segments
+├── generate_embeddings.py            # Script to generate embeddings using Amazon Titan (via Bedrock)
+├── update_embeddings.py              # Script to store embeddings in DynamoDB
+├── generate_metadata_from_s3.py      # Extract metadata from S3 and prepare it for storage
+├── update_dynamodb_metadata.py       # Push extracted metadata to DynamoDB
+├── update_dynamodb_from_json.py      # Optional script to update metadata in DynamoDB in batch
+│
+├── query_handler.py                  # AWS Lambda function to handle incoming queries and return recommendations
+├── query_bedrock.py                  # Local script to test queries with Amazon Bedrock embeddings
+├── list_models.py                    # Helper script to list all available Bedrock models
+├── details_model.py                  # Helper script to fetch details about Titan embedding models
+│
+├── titan_policy.json                 # IAM policy for accessing Amazon Bedrock services securely
+├── requirements.txt                  # List of required Python packages (e.g., boto3, pandas)
+└── README.md                         # Project documentation
+
+
