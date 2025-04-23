@@ -7,7 +7,7 @@ import streamlit as st
 import requests
 
 # Replace with your API Gateway Invoke URL
-api_url = "https://fcx146y4kc.execute-api.us-east-1.amazonaws.com/prod/query"
+api_url = "Replace with your API Gateway Invoke URL"
 
 # Streamlit app UI
 st.title("Audiobook Recommendation")
